@@ -1,2 +1,14 @@
-package am.itspace.companyemployeespring.controller;public class MainController {
+package am.itspace.companyemployeespring.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class MainController {
+
+    @GetMapping("/")
+    public String mainPage() {//kanchum a tomcat-y
+        return "index";
+    }
+
 }
