@@ -18,7 +18,6 @@ public class CompanyController {
     @Autowired
     private CompanyRepository companyRepository;
 
-
     @GetMapping("/company")
     public String company(ModelMap modelMap) {
         List<Company> companies = companyRepository.findAll();
@@ -26,12 +25,10 @@ public class CompanyController {
         return "company";
     }
 
-
     @GetMapping("/company/add")
     public String addCompanyPage() {
         return "addCompany";
     }
-
 
     @PostMapping("/company/add")
     public String addCompany(@ModelAttribute Company company) {
