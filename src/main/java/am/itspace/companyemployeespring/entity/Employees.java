@@ -26,5 +26,4 @@ public class Employees {
     @ManyToOne
     private Company company;
     private String profilePic;
-
 }
