@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainController {
 
     @GetMapping("/")
-    public String mainPage() {//kanchum a tomcat-y
+    public String mainPage() {
         return "index";
     }
-
 }
