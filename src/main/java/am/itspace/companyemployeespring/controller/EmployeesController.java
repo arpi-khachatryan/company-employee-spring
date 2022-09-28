@@ -5,8 +5,8 @@ import am.itspace.companyemployeespring.entity.Company;
 import am.itspace.companyemployeespring.entity.Employees;
 import am.itspace.companyemployeespring.repository.CompanyRepository;
 import am.itspace.companyemployeespring.repository.EmployeeRepository;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -21,16 +21,17 @@ import java.io.InputStream;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class EmployeesController {
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeRepository;
 
-    @Autowired
-    private CompanyRepository companyRepository;
+    private final CompanyRepository companyRepository;
+
 
     @Value("${company.employee.images.folder}")
     private String folderPath;
+
 
     @GetMapping("/employees")
     public String employees(ModelMap modelMap) {
@@ -47,16 +48,20 @@ public class EmployeesController {
     }
 
     @PostMapping("/employees/add")
-    public String addEmployees(@ModelAttribute CreateEmployeesDto createEmployeesDto,
+    public String addEmployees(@ModelAttribute CreateEmployeesDto dto,
                                @RequestParam("employeesImage") MultipartFile file) throws IOException {
         Employees employees = new Employees();
-        employees.setName(createEmployeesDto.getName());
-        employees.setSurname(createEmployeesDto.getSurname());
-        employees.setEmail(createEmployeesDto.getEmail());
-        employees.setPhoneNumber(createEmployeesDto.getPhoneNumber());
-        employees.setSalary(createEmployeesDto.getSalary());
-        employees.setPosition(createEmployeesDto.getPosition());
-        employees.setCompany(companyRepository.getReferenceById(createEmployeesDto.getCompanyId()));
+        Company company = companyRepository.getReferenceById(dto.getCompanyId());
+
+        employees.setName(dto.getName());
+        employees.setSurname(dto.getSurname());
+        employees.setEmail(dto.getEmail());
+        employees.setPhoneNumber(dto.getPhoneNumber());
+        employees.setSalary(dto.getSalary());
+        employees.setPosition(dto.getPosition());
+        employees.setCompany(company);
+        company.setSize(company.getSize() + 1);
+
         if (!file.isEmpty() && file.getSize() > 0) {
             String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
             File newFile = new File(folderPath + File.separator + fileName);
@@ -64,6 +69,7 @@ public class EmployeesController {
             employees.setProfilePic(fileName);
         }
         employeeRepository.save(employees);
+        companyRepository.save(company);
         return "redirect:/employees";
     }
 
