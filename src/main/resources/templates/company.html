@@ -18,9 +18,9 @@
         <td th:text="${company.name}"></td>
         <td th:text="${company.size}"></td>
         <td th:text="${company.address}"></td>
-        <td><a href="/company/add">To add a new company</a></td>
         <td><a th:href="@{/company/delete(id=${company.id})}">Delete the company</a></td>
     </tr>
+    <a href="/company/add">To add a new company</a>
 </table>
 
 </body>
