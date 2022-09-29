@@ -28,7 +28,6 @@ public class EmployeesController {
 
     private final CompanyRepository companyRepository;
 
-
     @Value("${company.employee.images.folder}")
     private String folderPath;
 
