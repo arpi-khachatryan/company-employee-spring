@@ -20,7 +20,9 @@
     </tr>
 
     <tr th:each="employee: ${employees}">
-        <td><img th:src="@{/employees/getImages(fileName=${employee.profilePic})}"></td>
+        <td><img th:if="${employee.profilePic != null}"
+                 th:src="@{/employees/getImages(fileName=${employee.profilePic})}"></td>
+        <img th:if="${employee.profilePic == null }" src="/image/images.png">
         <td th:text="${employee.name}"></td>
         <td th:text="${employee.surname}"></td>
         <td th:text="${employee.email}"></td>
@@ -28,6 +30,7 @@
         <td th:text="${employee.salary}"></td>
         <td th:text="${employee.position}"></td>
         <td th:text="${employee.company.name}"></td>
+        <td><a th:href="@{/employees/delete(id=${employee.id})}">Delete the employee</a></td>
     </tr>
 
     <a href="/employees/add">To add a new employee</a>
