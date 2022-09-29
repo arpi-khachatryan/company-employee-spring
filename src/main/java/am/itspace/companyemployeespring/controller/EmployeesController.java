@@ -78,4 +78,14 @@ public class EmployeesController {
         InputStream inputStream = new FileInputStream(folderPath + File.separator + fileName);
         return IOUtils.toByteArray(inputStream);
     }
+
+    @GetMapping("/employees/delete")
+    public String deleteEmployee(@RequestParam("id") int id) {
+        Employees employee = employeeRepository.getReferenceById(id);
+        Company company = employee.getCompany();
+        company.setSize(company.getSize() - 1);
+        companyRepository.save(company);
+        employeeRepository.deleteById(id);
+        return "redirect:/employees";
+    }
 }
