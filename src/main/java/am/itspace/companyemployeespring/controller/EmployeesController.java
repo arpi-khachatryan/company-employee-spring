@@ -19,6 +19,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -28,7 +29,7 @@ public class EmployeesController {
 
     private final CompanyRepository companyRepository;
 
-    @Value("${company.employee.images.folder}")
+    @Value("${images.folder}")
     private String folderPath;
 
 
@@ -80,11 +81,14 @@ public class EmployeesController {
 
     @GetMapping("/employees/delete")
     public String deleteEmployee(@RequestParam("id") int id) {
-        Employees employee = employeeRepository.getReferenceById(id);
-        Company company = employee.getCompany();
-        company.setSize(company.getSize() - 1);
-        companyRepository.save(company);
-        employeeRepository.deleteById(id);
+        Optional<Employees> employeeById = employeeRepository.findById(id);
+        if (employeeById != null) {
+            Employees employee = employeeById.get();
+            Company company = employee.getCompany();
+            company.setSize(company.getSize() - 1);
+            companyRepository.save(company);
+            employeeRepository.deleteById(id);
+        }
         return "redirect:/employees";
     }
 }
