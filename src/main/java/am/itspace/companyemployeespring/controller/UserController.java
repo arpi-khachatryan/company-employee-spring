@@ -28,9 +28,6 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Value("${images.folder}")
-    private String folderPath;
-
     @GetMapping("/users")
     public String users(ModelMap modelMap) {
         List<User> users = userRepository.findAll();
@@ -43,28 +40,12 @@ public class UserController {
         return "addUser";
     }
 
-
     @PostMapping("/users/add")
-    public String addUser(@ModelAttribute User user,
-                          @RequestParam("userImage") MultipartFile file) throws IOException {
-
-        if (!file.isEmpty() && file.getSize() > 0) {
-            String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-            File newFile = new File(folderPath + File.separator + fileName);
-            file.transferTo(newFile);
-            user.setPicUrl(fileName);
-        }
-
+    public String addUser(@ModelAttribute User user) throws IOException {
         String passwordEncoded = passwordEncoder.encode(user.getPassword());
         user.setPassword(passwordEncoded);
         userRepository.save(user);
-        return "redirect:/users";
-    }
-
-    @GetMapping(value = "/users/getImage", produces = MediaType.IMAGE_JPEG_VALUE)
-    public @ResponseBody byte[] getImage(@RequestParam("fileName") String fileName) throws IOException {
-        InputStream inputStream = new FileInputStream(folderPath + File.separator + fileName);
-        return IOUtils.toByteArray(inputStream);
+        return "redirect:/";
     }
 
     @GetMapping("/users/delete")
