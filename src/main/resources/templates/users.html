@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Show All Users</title>
+</head>
+<body>
+
+<table>
+    <tr>
+        <th>name</th>
+        <th>surname</th>
+        <th>email</th>
+        <th>role</th>
+    </tr>
+
+    <tr th:each="user: ${users}">
+
+        <td><img th:if="${user.picUrl != null}"
+                 th:src="@{/users/getImage(fileName=${user.picUrl})}">
+            <img th:if="${user.picUrl == null }" src="/image/images.png"></td>
+
+        <td th:text="${user.name}"></td>
+        <td th:text="${user.surname}"></td>
+        <td th:text="${user.email}"></td>
+        <td th:text="${user.role.name()}"></td>
+        <td><a th:href="@{/user/delete(id=${user.id})}">Delete the user</a></td>
+    </tr>
+
+    <a href="/users/add">To add a new user</a>
+
+</table>
+</body>
+</html>
