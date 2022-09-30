@@ -45,7 +45,7 @@ public class UserController {
         String passwordEncoded = passwordEncoder.encode(user.getPassword());
         user.setPassword(passwordEncoded);
         userRepository.save(user);
-        return "redirect:/";
+        return "redirect:/login";
     }
 
     @GetMapping("/users/delete")
