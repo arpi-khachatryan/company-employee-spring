@@ -8,7 +8,7 @@
 
 <h3>Add User</h3>
 
-<form action="/users/add" method="post" enctype="multipart/form-data">
+<form action="/users/add" method="post">
     <input type="text" name="name" placeholder="please input name"><br>
     <input type="text" name="surname" placeholder="please input surname"><br>
     <input type="text" name="email" placeholder="please input email"><br>
@@ -17,8 +17,6 @@
         <option value="USER">User</option>
         <option value="ADMIN">Admin</option>
     </select><br>
-
-    <input type="file" name="userImage">
     <input type="submit" value="Add User">
 </form>
 
