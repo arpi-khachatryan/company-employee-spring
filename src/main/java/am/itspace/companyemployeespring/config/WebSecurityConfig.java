@@ -32,9 +32,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/company").permitAll()
-                .antMatchers("/company/add").hasAuthority(Role.ADMIN.name())
-                .antMatchers("/employees").authenticated()
-                .antMatchers("/users").authenticated()
+                .antMatchers("/company/add").authenticated()
+                .antMatchers("/employees").permitAll()
+                .antMatchers("/employees/add").authenticated()
+                .antMatchers("/users").hasAuthority(Role.ADMIN.name())
                 .antMatchers("/users/add").permitAll()
                 .anyRequest().permitAll();
     }
