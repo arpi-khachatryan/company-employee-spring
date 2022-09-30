@@ -6,14 +6,15 @@
 </head>
 <body>
 
-<a href="/company"> See All Companies</a>
-<a href="/employees"> See All Employees</a>
+<a href="/company"> See All Companies</a><br>
+<a href="/employees"> See All Employees</a><br>
 
-<a href="/users">See All Users</a>
-<a href="/users/add">To Add a New User</a>
+<a href="/users">See All Users</a><br>
+
+<a href="/users/add">Register</a><br>
 
 <th:block th:if="${currentUser == null}">
-    <a href="/login">Login</a>
+    <a href="/login">Login</a><br><br>
 </th:block>
 
 <th:block th:if="${currentUser != null}">
