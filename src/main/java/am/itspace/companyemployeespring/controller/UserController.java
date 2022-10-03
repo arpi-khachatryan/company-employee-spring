@@ -2,20 +2,13 @@ package am.itspace.companyemployeespring.controller;
 
 import am.itspace.companyemployeespring.entity.User;
 import am.itspace.companyemployeespring.repository.UserRepository;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 
@@ -27,6 +20,11 @@ public class UserController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @GetMapping("/user")
+    public String users() {
+        return "user";
+    }
 
     @GetMapping("/users")
     public String users(ModelMap modelMap) {
