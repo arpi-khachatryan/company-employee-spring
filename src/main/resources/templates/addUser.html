@@ -12,6 +12,7 @@
     <input type="text" name="name" placeholder="please input name"><br>
     <input type="text" name="surname" placeholder="please input surname"><br>
     <input type="text" name="email" placeholder="please input email"><br>
+    <span style="color: red" th:if="${errorMessageEmail != null}" th:text="${errorMessageEmail}"></span><br>
     <input type="password" name="password" placeholder="please input password"><br>
     <select name="role">
         <option value="USER">User</option>
