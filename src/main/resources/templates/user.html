@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>User page</title>
+</head>
+<body>
+
+<a href="/company"> See All Companies</a><br>
+<a href="/employees"> See All Employees</a><br>
+<a href="/users/add">Register</a><br>
+<!--<th:block th:if="${currentUser != null && currentUser.role.name == 'ADMIN'}"><a href="/users">See All Users</a><br></th:block>-->
+
+<th:block th:if="${currentUser == null}">
+    <a href="/loginPage">Login</a><br><br>
+</th:block>
+
+<th:block th:if="${currentUser != null}">
+    <a href="/logout"> Sign Out</a>
+</th:block>
+
+</body>
+</html>
+
