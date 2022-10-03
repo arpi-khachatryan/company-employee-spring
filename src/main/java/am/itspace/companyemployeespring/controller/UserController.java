@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -39,11 +40,16 @@ public class UserController {
     }
 
     @PostMapping("/users/add")
-    public String addUser(@ModelAttribute User user) throws IOException {
+    public String addUser(@ModelAttribute User user, ModelMap modelMap) throws IOException {
+        Optional<User> userByEmail = userRepository.findByEmail(user.getEmail());
+        if (userByEmail.isPresent()) {
+            modelMap.addAttribute("errorMessageEmail", "Email already in use");
+            return "addUser";
+        }
         String passwordEncoded = passwordEncoder.encode(user.getPassword());
         user.setPassword(passwordEncoded);
         userRepository.save(user);
-        return "redirect:/login";
+        return "redirect:/loginPage";
     }
 
     @GetMapping("/users/delete")
